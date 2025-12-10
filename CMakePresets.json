@@ -17,7 +17,6 @@
 				"CMAKE_CXX_COMPILER": "clang++"
 			},
 			"binaryDir": "${sourceDir}/build-clang",
-			"toolchainFile": "${sourceDir}/build-clang/conan_toolchain.cmake",
 			"hidden": true
 		},
 		{
@@ -27,7 +26,8 @@
 			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release"
-			}
+			},
+			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
 		},
 		{
 			"displayName": "clang-debug",
@@ -36,7 +36,8 @@
 			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug"
-			}
+			},
+			"toolchainFile": "build/Debug/generators/conan_toolchain.cmake"
 		},
 		{
 			"displayName": "msvc-vs2022",
@@ -49,7 +50,7 @@
 				"CMAKE_CXX_COMPILER": "cl"
 			},
 			"binaryDir": "${sourceDir}/build-msvc",
-			"toolchainFile": "${sourceDir}/build-msvc/conan_toolchain.cmake",
+			"toolchainFile": "build/generators/conan_toolchain.cmake",
 			"architecture": {
 				"value": "x64",
 				"strategy": "external"
@@ -66,7 +67,6 @@
 				"CMAKE_CXX_COMPILER": "g++"
 			},
 			"binaryDir": "${sourceDir}/build-gcc",
-			"toolchainFile": "${sourceDir}/build-gcc/conan_toolchain.cmake",
 			"hidden": true
 		},
 		{
@@ -76,7 +76,8 @@
 			"inherits": "gcc-mingw-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release"
-			}
+			},
+			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
 		},
 		{
 			"displayName": "gcc-debug",
@@ -85,7 +86,8 @@
 			"inherits": "gcc-mingw-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug"
-			}
+			},
+			"toolchainFile": "build/Debug/generators/conan_toolchain.cmake"
 		}
 	],
 	"buildPresets": [
