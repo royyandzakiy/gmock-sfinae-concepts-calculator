@@ -21,3 +21,5 @@ cmake --build build-gcc --parallel 20
 build-gcc\src\myapp.exe
 build-gcc\test\unit_tests.exe
 ```
+
+Be cautious, the build foldering generated will be different, if using the above codes directly, compared to using the VSCode CMake extension
