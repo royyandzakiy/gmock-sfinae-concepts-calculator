@@ -16,10 +16,11 @@ The goal is **not** to test the underlying calculator implementations. The goal 
 
 ## 1. What We Test
 
-We test **only the manager logic** (e.g., `CalculatorManager<T>`).
-We do **not** test the actual calculator implementation, similar to how you would mock a system object such as `WinRT::BluetoothAdvertisementWatcher` when testing a BLE device manager. Here we assume calculator is a non-changable 3rd party class.
+We test **only the manager logic** (e.g., `CalculatorManager<T>`). This is like our internal home-made class. It owns a `Calculator`.
 
-The manager is the unit under test; the calculator is treated purely as a dependency interface.
+Assume `Calculator` is a non-changable 3rd party class. We do **not** test the actual `Calculator` implementation, similar to how you would mock a system object such as `WinRT::BluetoothAdvertisementWatcher` when testing a BLE device manager.
+
+The manager is the unit under test; the calculator is treated purely as a dependency interface that we approach from different tools: Inheritance, Templates (Sfinae-based, Concepts-based).
 
 ## 2. What We Care About
 
