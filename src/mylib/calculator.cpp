@@ -13,6 +13,5 @@ bool Calculator::isEven(int number) {
 }
 
 int Calculator::processValue(int value) {
-	// Default implementation
 	return value * 2;
 }
