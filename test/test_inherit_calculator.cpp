@@ -8,43 +8,38 @@ using ::testing::Return;
 
 // --- Tests ---
 
-// Test the Consumer with the REAL Dependency (Sanity Check)
-TEST(InheritCalculatorTest, RealCalc_SumIsOdd_ReturnsSum) {
-	// Arrange
+TEST(InheritCalculatorTest, CalculateSumAndProcess_WhenSumIsOdd_ShouldReturnRawSum) {
 	inheritlib::Calculator real_calc;
-	// T_Calculator = Calculator. Concept check passes.
 	inheritlib::CalculatorManager real_calc_manager(real_calc);
 
-	// Act & Assert (Case 1: 2 + 3 = 5 (odd), returns 5)
-	// The implementation logic is: if isEven is false, return the sum directly.
+	// Arrange
+
+	// Act & Assert
+	// Case 1: 2 + 3 = 5 (odd), returns 5; (if isEven is false, return the sum directly.)
 	EXPECT_EQ(real_calc_manager.calculateSumAndProcess(2, 3), 5);
 }
 
-TEST(InheritCalculatorTest, RealCalc_SumIsEven_ReturnsProcessedValue) {
-	// Arrange
+TEST(InheritCalculatorTest, CalculateSumAndProcess_WhenSumIsEven_ShouldReturnProcessedValue) {
 	inheritlib::Calculator real_calc;
-	// T_Calculator = Calculator. Concept check passes.
 	inheritlib::CalculatorManager real_calc_manager(real_calc);
 
-	// Act & Assert (Case 2: 4 + 6 = 10 (even), processValue(10) returns 20)
-	// The implementation logic is: if isEven is true, return processValue(sum).
+	// Arrange
+
+	// Act & Assert
+	// Case 2: 4 + 6 = 10 (even), processValue(10) returns 20; (if isEven is true, return processValue(sum).)
 	EXPECT_EQ(real_calc_manager.calculateSumAndProcess(4, 6), 20);
 }
 
-// Renamed Test Fixture to InheritCalculatorTest
-// Test the Consumer with the MOCK Dependency (Isolation)
-TEST(InheritCalculatorTest, Mock_SumIsEven_ReturnsMockedProcessedValue) {
-	// Arrange
-	MocInheritCalculator mock_calc;
-	// T_Calculator = MocInheritCalculator. Concept check passes.
+TEST(InheritCalculatorTest, MockCalculateSumAndProcess_WhenMockReturnsEvenSum_ShouldReturnMockedProcessedValue) {
+	MockInheritCalculator mock_calc;
 	inheritlib::CalculatorManager mock_calc_manager(mock_calc);
 
-	// Setup Mock Expectations (Arrange)
+	// Arrange
 	// 1. sum: 5 + 5 = 10
-	EXPECT_CALL(mock_calc, add(5, 5)).WillOnce(Return(10));
 	// 2. check: isEven(10) = true (triggers processValue)
-	EXPECT_CALL(mock_calc, isEven(10)).WillOnce(Return(true));
 	// 3. process: processValue(10) = 99 (mock the final output)
+	EXPECT_CALL(mock_calc, add(5, 5)).WillOnce(Return(10));
+	EXPECT_CALL(mock_calc, isEven(10)).WillOnce(Return(true));
 	EXPECT_CALL(mock_calc, processValue(10)).WillOnce(Return(99));
 
 	// Act & Assert
@@ -52,13 +47,12 @@ TEST(InheritCalculatorTest, Mock_SumIsEven_ReturnsMockedProcessedValue) {
 	EXPECT_EQ(mock_calc_manager.calculateSumAndProcess(5, 5), 99);
 }
 
-TEST(InheritCalculatorTest, Mock_DoubleMultiply_ReturnsMockedMultipliedValue) {
-	// Arrange
-	MocInheritCalculator mock_calc;
+TEST(InheritCalculatorTest, MockDoubleMultiply_ShouldReturnTwoTimesMockedMultiplyResult) {
+	MockInheritCalculator mock_calc;
 	inheritlib::CalculatorManager mock_calc_manager(mock_calc);
 	int expected_value = 14; // Mocked multiply result (7) * 2 = 14
 
-	// Setup Mock Expectations (Arrange)
+	// Arrange
 	// Mock multiply(3, X) to return 7, regardless of the second argument.
 	EXPECT_CALL(mock_calc, multiply(3, _)).WillOnce(Return(7));
 

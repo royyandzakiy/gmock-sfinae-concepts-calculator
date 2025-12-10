@@ -3,7 +3,7 @@
 #include <iostream>
 #include <type_traits>
 
-namespace templatelib {
+namespace conceptlib {
 
 class Calculator {
   public:
