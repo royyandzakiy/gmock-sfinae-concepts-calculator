@@ -52,7 +52,7 @@
 				"strategy": "external"
 			},
 			"binaryDir": "${sourceDir}/build-msvc",
-			"toolchainFile": "build/generators/conan_toolchain.cmake"
+			"toolchainFile": "conan_toolchain.cmake"
 		}
 	],
 	"buildPresets": [

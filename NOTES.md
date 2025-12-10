@@ -10,7 +10,7 @@ conan install . -of build-gcc --build=missing -s compiler=gcc -s compiler.versio
 cmake -B build-gcc
 cmake --build build-gcc
 
-conan install . -of build-msvc --build=missing -s compiler=msvc -s compiler.version=193 -s compiler.runtime=dynamic -s compiler.cppstd=23 -c tools.compilation:verbosity=verbose
+conan install . -of build-msvc --build=missing -s compiler=msvc -s compiler.version=193 -s compiler.runtime=static -s compiler.cppstd=23 -c tools.compilation:verbosity=verbose
 cmake -B build-msvc
 cmake --build build-msvc
 ```
