@@ -1,4 +1,4 @@
-// template_mock_calculator.h
+// concept_mock_calculator.h
 #include <gmock/gmock.h>
 
 // --- Mock Template Concept Calculator (Adhering to Duck Typing/Concept) ---

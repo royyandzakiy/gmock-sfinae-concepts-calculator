@@ -1,3 +1,4 @@
+// test_concept_calculator.cpp
 #include "concept_mock_calculator.h" // Includes the Concept and CalculatorManager
 #include <conceptlib/calculator.h>	 // Includes the Concept and CalculatorManager
 #include <gmock/gmock.h>
@@ -7,28 +8,6 @@ using ::testing::_;
 using ::testing::Return;
 
 // --- Tests ---
-
-/**
-- We test our Manager logic, not the calculator 3rd party lib:
-	- We are testing CalculatorManager, NOT Calculator (or MockCalculator).
-	This mimics real situation where Calculator is like a WinRT::BluetoothAdvertisementWatcher,
-	and we will NOT be testing the advwatcher itself, but instead we mock said advwatcher
-	with mock_advwatcher, and insert it into the BleDeviceManager. our goal is to test
-	BleDeviceManager has consistent logic.
-- We test the flow inside our manager logic, ommit what we don't care:
-	- we CARE about the input and output sameness between the all expected function calls sequence,
-	we DON'T care about the final output result because it is NOT used elsewhere
-	- This is the definition of isolation, we are verifying the contractual interaction and data flow between
-	the Manager and the Dependency's interface, ignoring the dependency's internal logic entirely.
-- BDD style naming of test:
-	Given/When/Then
-	Action___When Conditions Met___Should Result
-
-	eg:
-	- DoubleMultiply_WhenMockReturnsAValue_ShouldReturnTwoTimesThatValue
-	- CalculateSumAndProcess_WhenSumIsOdd_ShouldReturnRawSum
- */
-
 class ConceptRealCalculatorManagerTest_F : public ::testing::Test {
   protected:
 	conceptlib::Calculator real_calc;

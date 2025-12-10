@@ -1,9 +1,9 @@
-// template_mock_calculator.h
+// sfinae_mock_calculator.h
 #include <gmock/gmock.h>
 
 // --- Mock Template Concept Calculator (Adhering to Duck Typing/Concept) ---
 // This mock must satisfy the CalculatorLike requirements.
-class MockConceptCalculator {
+class MockSfinaeCalculator {
   public:
 	// MOCK_METHOD macros are used directly; no virtual keywords needed.
 	MOCK_METHOD(int, add, (int a, int b));

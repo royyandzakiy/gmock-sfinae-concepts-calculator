@@ -13,17 +13,27 @@ class Calculator {
 	int processValue(int value);
 };
 
-// --- C++20 Concept Definition ---
-// This concept enforces the required public interface (duck typing contract).
+// --- C++17 Type Traits Definition ---
+template <typename T, typename = void> struct is_calculator_like_type_trait : std::false_type {};
 template <typename T>
-concept CalculatorLike = requires(T t, int a, int b) {
-	{ t.add(a, b) } -> std::same_as<int>;
-	{ t.multiply(a, b) } -> std::same_as<int>;
-	{ t.isEven(a) } -> std::same_as<bool>;
-	{ t.processValue(a) } -> std::same_as<int>;
-};
+struct is_calculator_like_type_trait<
+	T, std::void_t<
+		   // function expression check
+		   decltype(std::declval<T>().add(0, 0)), decltype(std::declval<T>().multiply(0, 0)),
+		   decltype(std::declval<T>().isEven(0)), decltype(std::declval<T>().processValue(0)),
 
-template <CalculatorLike T> class CalculatorManager {
+		   // type check
+		   std::enable_if<std::is_same<decltype(std::declval<T>().add(0, 0)), int>::value>,
+		   std::enable_if<std::is_same<decltype(std::declval<T>().multiply(0, 0)), int>::value>,
+		   std::enable_if<std::is_same<decltype(std::declval<T>().isEven(0)), bool>::value>,
+		   std::enable_if<std::is_same<decltype(std::declval<T>().processValue(0)), int>::value>>> : std::true_type {};
+
+template <typename T> constexpr bool is_calculator_like_type_trait_v = is_calculator_like_type_trait<T>::value;
+
+template <typename T, typename = std::enable_if_t<is_calculator_like_type_trait_v<T>>> class CalculatorManager {
+	static_assert(is_calculator_like_type_trait_v<T>,
+				  "Type does not have required methodes: add(), multiply(), isEven(), processValue()");
+
   public:
 	// Non-owning dependency, but safe and modern.
 	explicit CalculatorManager(std::reference_wrapper<T> calculator) : calculator_(calculator) {
@@ -33,15 +43,17 @@ template <CalculatorLike T> class CalculatorManager {
 		auto &c = calculator_.get();
 		int sum = c.add(a, b);
 		return c.isEven(sum) ? c.processValue(sum) : sum;
+		return 0;
 	}
 
 	int doubleMultiply(int a, int b) {
 		auto &c = calculator_.get();
 		return c.multiply(a, b) * 2;
+		return 0;
 	}
 
   private:
 	std::reference_wrapper<T> calculator_;
 };
 
-};
+}; // namespace sfinaelib
