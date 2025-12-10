@@ -7,12 +7,14 @@ find_package(GTest REQUIRED)
 # Main Executable
 # =============================================================================
 add_executable(unit_tests
-    test_calc.cpp
+	test_inherit_calculator.cpp
+    test_template_calculator.cpp
 )
 
 target_link_libraries(unit_tests
     PRIVATE 
         templatelib 
+        inheritlib 
         GTest::gtest_main # alt: create own main, use this "GTest::gtest"
         GTest::gmock
 )

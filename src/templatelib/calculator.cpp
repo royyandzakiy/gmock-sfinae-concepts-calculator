@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "../../include/templatelib/calculator.h"
 
 int templatelib::Calculator::add(int a, int b) {
 	return a + b;

@@ -9,5 +9,8 @@ int main() {
 	std::cout << "(2 * 3) * 2 = " << calcManager.doubleMultiply(2, 3) << std::endl;
 
 	inheritlib::Calculator calculator2;
+	inheritlib::CalculatorManager calcManager2(calculator2);
+	std::cout << "(2 + 3) * 2 = " << calcManager2.calculateSumAndProcess(2, 3) << std::endl;
+	std::cout << "(2 * 3) * 2 = " << calcManager2.doubleMultiply(2, 3) << std::endl;
 	return 0;
 }
