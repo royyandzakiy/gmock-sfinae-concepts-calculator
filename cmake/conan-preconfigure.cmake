@@ -42,7 +42,7 @@ endif()
 # Set compiler-specific settings
 # =============================================================================
 set(CONAN_BUILD_DIR "${CMAKE_SOURCE_DIR}/build-${CONAN_PROFILE}")
-set(CONAN_TOOLCHAIN_FILE "${CONAN_BUILD_DIR}/conan_toolchain.cmake")
+# set(CONAN_TOOLCHAIN_FILE "${CONAN_BUILD_DIR}/conan_toolchain.cmake")
 
 if(CONAN_PROFILE STREQUAL "clang")
     set(CONAN_COMPILER "clang")
@@ -50,7 +50,7 @@ if(CONAN_PROFILE STREQUAL "clang")
     set(CONAN_RUNTIME_TYPE "Release")
     set(CONAN_GENERATOR "Ninja")
     set(CONAN_CMAKE_GENERATOR "Ninja")
-    set(CONAN_PROFILE_SPECIFIC_ARGS "-s compiler.runtime_type=Release")
+    set(CONAN_PROFILE_SPECIFIC_ARGS "-s" "compiler.runtime_type=Release")
     
 elseif(CONAN_PROFILE STREQUAL "gcc")
     set(CONAN_COMPILER "gcc")
@@ -58,7 +58,7 @@ elseif(CONAN_PROFILE STREQUAL "gcc")
     set(CONAN_LIBCXX "libstdc++")
     set(CONAN_GENERATOR "MinGW Makefiles")
     set(CONAN_CMAKE_GENERATOR "MinGW Makefiles")
-    set(CONAN_PROFILE_SPECIFIC_ARGS "-s compiler.libcxx=libstdc++")
+    set(CONAN_PROFILE_SPECIFIC_ARGS "-s" "compiler.libcxx=libstdc++")
     
 elseif(CONAN_PROFILE STREQUAL "msvc")
     set(CONAN_COMPILER "msvc")
@@ -66,7 +66,7 @@ elseif(CONAN_PROFILE STREQUAL "msvc")
     set(CONAN_RUNTIME "static")
     set(CONAN_GENERATOR "Visual Studio 17 2022")
     set(CONAN_CMAKE_GENERATOR "Visual Studio 17 2022")
-    set(CONAN_PROFILE_SPECIFIC_ARGS "-s compiler.runtime=static")
+    set(CONAN_PROFILE_SPECIFIC_ARGS "-s" "compiler.runtime=static")
 endif()
 
 # =============================================================================
@@ -82,13 +82,13 @@ else()
         
         # Execute Conan install
         execute_process(
-            COMMAND ${CONAN_EXECUTABLE} install . -of ${CONAN_BUILD_DIR} --build=missing
-                -s compiler=${CONAN_COMPILER}
-                -s compiler.version=${CONAN_COMPILER_VERSION}
-                -s compiler.cppstd=${CONAN_CPPSTD}
-                -s build_type=${CONAN_BUILD_TYPE}
+            COMMAND "${CONAN_EXECUTABLE}" "install" "." "-of" "${CONAN_BUILD_DIR}" "--build=missing"
+                "-s" "compiler=${CONAN_COMPILER}"
+                "-s" "compiler.version=${CONAN_COMPILER_VERSION}"
+                "-s" "compiler.cppstd=${CONAN_CPPSTD}"
+                "-s" "build_type=${CONAN_BUILD_TYPE}"
+                "-c" "tools.cmake.cmaketoolchain:generator=${CONAN_GENERATOR}"
                 ${CONAN_PROFILE_SPECIFIC_ARGS}
-                -c "tools.cmake.cmaketoolchain:generator=${CONAN_GENERATOR}"
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             RESULT_VARIABLE CONAN_RESULT
         )
