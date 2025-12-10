@@ -20,9 +20,9 @@ class MockCalculator {
 
 // Test the Consumer with the REAL Dependency (Sanity Check)
 TEST(CalculatorManagerTest, RealDependency) {
-	templib::Calculator real_calc;
+	templatelib::Calculator real_calc;
 	// T_Calculator = Calculator. Concept check passes.
-	templib::CalculatorManager<templib::Calculator> real_calc_manager(real_calc);
+	templatelib::CalculatorManager<templatelib::Calculator> real_calc_manager(real_calc);
 
 	// 2 + 3 = 5 (odd), returns 5
 	EXPECT_EQ(real_calc_manager.calculateSumAndProcess(2, 3), 5);
@@ -41,13 +41,13 @@ TEST(CalculatorManagerTest, MockDependencyInjection) {
 	EXPECT_CALL(mock_calc, processValue(10)).WillOnce(Return(99)); // Mock the final value to test flow control
 
 	// T_Calculator = MockCalculator. Concept check passes.
-	templib::CalculatorManager<MockCalculator> mock_calc_manager_1(mock_calc);
+	templatelib::CalculatorManager<MockCalculator> mock_calc_manager_1(mock_calc);
 	EXPECT_EQ(mock_calc_manager_1.calculateSumAndProcess(5, 5), 99);
 
 	// Set expectations for doubleMultiply
 	EXPECT_CALL(mock_calc, multiply(3, _)).WillOnce(Return(7)); // Mock multiply(3, X) to return 7
 
-	templib::CalculatorManager<MockCalculator> mock_calc_manager_2(mock_calc);
+	templatelib::CalculatorManager<MockCalculator> mock_calc_manager_2(mock_calc);
 	// doubleMultiply(3, 4) should return 7 * 2 = 14
 	EXPECT_EQ(mock_calc_manager_2.doubleMultiply(3, 4), 14);
 }

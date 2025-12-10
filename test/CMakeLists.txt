@@ -12,7 +12,7 @@ add_executable(unit_tests
 
 target_link_libraries(unit_tests
     PRIVATE 
-        templib 
+        templatelib 
         GTest::gtest_main # alt: create own main, use this "GTest::gtest"
         GTest::gmock
 )

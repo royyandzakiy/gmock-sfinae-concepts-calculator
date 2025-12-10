@@ -3,7 +3,7 @@
 #include <iostream>
 #include <type_traits>
 
-namespace templib {
+namespace templatelib {
 
 class Calculator {
   public:
