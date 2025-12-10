@@ -11,6 +11,11 @@
 			"name": "clang-ninja-base",
 			"description": "Configure using Clang compiler with Ninja generator",
 			"generator": "Ninja",
+			"cacheVariables": {
+				"CONAN_PROFILE": "clang",
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			},
 			"binaryDir": "${sourceDir}/build-clang",
 			"toolchainFile": "${sourceDir}/build-clang/conan_toolchain.cmake",
 			"hidden": true
@@ -38,6 +43,11 @@
 			"name": "msvc-vs2022",
 			"description": "Configure using MSVC with Visual Studio 2022 generator",
 			"generator": "Visual Studio 17 2022",
+			"cacheVariables": {
+				"CONAN_PROFILE": "msvc",
+				"CMAKE_C_COMPILER": "cl",
+				"CMAKE_CXX_COMPILER": "cl"
+			},
 			"binaryDir": "${sourceDir}/build-msvc",
 			"toolchainFile": "${sourceDir}/build-msvc/conan_toolchain.cmake",
 			"architecture": {
@@ -50,6 +60,11 @@
 			"name": "gcc-mingw-base",
 			"description": "Configure using GCC with MinGW Makefiles generator",
 			"generator": "MinGW Makefiles",
+			"cacheVariables": {
+				"CONAN_PROFILE": "gcc",
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			},
 			"binaryDir": "${sourceDir}/build-gcc",
 			"toolchainFile": "${sourceDir}/build-gcc/conan_toolchain.cmake",
 			"hidden": true
