@@ -1,64 +1,55 @@
-#include "calculator.h"
+#include "calculator.h" // Includes the Concept and CalculatorManager
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-using ::testing::NiceMock;
+using ::testing::_;
 using ::testing::Return;
 
-// Mock class for Calculator
-class MockCalculator : public Calculator {
+// --- Mock Calculator (Adhering to Duck Typing/Concept) ---
+// This mock must satisfy the CalculatorLike requirements.
+class MockCalculator {
   public:
-	MOCK_METHOD(int, add, (int a, int b), (override));
-	MOCK_METHOD(int, multiply, (int a, int b), (override));
-	MOCK_METHOD(bool, isEven, (int number), (override));
-	MOCK_METHOD(int, processValue, (int value), (override));
+	// MOCK_METHOD macros are used directly; no virtual keywords needed.
+	MOCK_METHOD(int, add, (int a, int b));
+	MOCK_METHOD(int, multiply, (int a, int b));
+	MOCK_METHOD(bool, isEven, (int number));
+	MOCK_METHOD(int, processValue, (int value));
 };
 
-// Basic test without mocking
-TEST(CalculatorTest, BasicOperations) {
-	Calculator calc;
-	EXPECT_EQ(calc.add(2, 3), 5);
-	EXPECT_EQ(calc.multiply(4, 5), 20);
-	EXPECT_TRUE(calc.isEven(4));
-	EXPECT_FALSE(calc.isEven(5));
+// --- Tests ---
+
+// Test the Consumer with the REAL Dependency (Sanity Check)
+TEST(CalculatorManagerTest, RealDependency) {
+	templib::Calculator real_calc;
+	// T_Calculator = Calculator. Concept check passes.
+	templib::CalculatorManager<templib::Calculator> real_calc_manager(real_calc);
+
+	// 2 + 3 = 5 (odd), returns 5
+	EXPECT_EQ(real_calc_manager.calculateSumAndProcess(2, 3), 5);
+
+	// 4 + 6 = 10 (even), processValue(10) returns 20
+	EXPECT_EQ(real_calc_manager.calculateSumAndProcess(4, 6), 20);
 }
 
-// Test using mock
-TEST(CalculatorTest, MockUsage) {
-	NiceMock<MockCalculator> mockCalc;
+// Test the Consumer with the MOCK Dependency (Isolation)
+TEST(CalculatorManagerTest, MockDependencyInjection) {
+	MockCalculator mock_calc;
 
-	// Set expectations
-	EXPECT_CALL(mockCalc, add(2, 3)).WillOnce(Return(100)); // Mocked to return 100
+	// Set expectations for calculateSumAndProcess (Case: Sum is Processed)
+	EXPECT_CALL(mock_calc, add(5, 5)).WillOnce(Return(10));
+	EXPECT_CALL(mock_calc, isEven(10)).WillOnce(Return(true));
+	EXPECT_CALL(mock_calc, processValue(10)).WillOnce(Return(99)); // Mock the final value to test flow control
 
-	EXPECT_CALL(mockCalc, isEven(4)).WillOnce(Return(false)); // Mocked to return false
+	// T_Calculator = MockCalculator. Concept check passes.
+	templib::CalculatorManager<MockCalculator> mock_calc_manager_1(mock_calc);
+	EXPECT_EQ(mock_calc_manager_1.calculateSumAndProcess(5, 5), 99);
 
-	// Use the mock
-	EXPECT_EQ(mockCalc.add(2, 3), 100);
-	EXPECT_FALSE(mockCalc.isEven(4));
-}
+	// Set expectations for doubleMultiply
+	EXPECT_CALL(mock_calc, multiply(3, _)).WillOnce(Return(7)); // Mock multiply(3, X) to return 7
 
-// Test with argument matchers
-TEST(CalculatorTest, WithMatchers) {
-	MockCalculator mockCalc;
-
-	// Any argument
-	EXPECT_CALL(mockCalc, add(testing::_, testing::_)).WillOnce(Return(42));
-
-	// Specific argument
-	EXPECT_CALL(mockCalc, isEven(10)).WillOnce(Return(true));
-
-	EXPECT_EQ(mockCalc.add(1, 2), 42);
-	EXPECT_TRUE(mockCalc.isEven(10));
-}
-
-// Test multiple calls
-TEST(CalculatorTest, MultipleCalls) {
-	MockCalculator mockCalc;
-
-	EXPECT_CALL(mockCalc, multiply(testing::_, testing::_)).Times(2).WillOnce(Return(10)).WillOnce(Return(20));
-
-	EXPECT_EQ(mockCalc.multiply(1, 2), 10);
-	EXPECT_EQ(mockCalc.multiply(3, 4), 20);
+	templib::CalculatorManager<MockCalculator> mock_calc_manager_2(mock_calc);
+	// doubleMultiply(3, 4) should return 7 * 2 = 14
+	EXPECT_EQ(mock_calc_manager_2.doubleMultiply(3, 4), 14);
 }
 
 int main(int argc, char **argv) {
