@@ -2,26 +2,24 @@
 #include "inheritlib/calculator.h"
 #include "sfinaelib/calculator.h"
 #include <iostream>
-#include <print>
 
-auto main() -> int {
-	std::println("Inheritence based");
+int main() {
+	std::cout << "Inheritence based" << std::endl;
 	inheritlib::Calculator calculatorInh;
 	inheritlib::CalculatorManager calcManagerInh(calculatorInh);
-	std::println("(2 + 3) * 2 = {}", calcManagerInh.calculateSumAndProcess(2, 3));
-	std::println("(2 * 3) * 2 = {}", calcManagerInh.doubleMultiply(2, 3));
+	std::cout << "(2 + 3) * 2 = " << calcManagerInh.calculateSumAndProcess(2, 3) << std::endl;
+	std::cout << "(2 * 3) * 2 = " << calcManagerInh.doubleMultiply(2, 3) << std::endl;
 
-	std::println("Template Sfinae based");
+	std::cout << "Template Sfinae based" << std::endl;
 	sfinaelib::Calculator calculatorSfin;
 	sfinaelib::CalculatorManager<sfinaelib::Calculator> calcManagerSfin(calculatorSfin);
-	std::println("(2 + 3) * 2 = {}", calcManagerSfin.calculateSumAndProcess(2, 3));
-	std::println("(2 * 3) * 2 = {}", calcManagerSfin.doubleMultiply(2, 3));
+	std::cout << "(2 + 3) * 2 = " << calcManagerSfin.calculateSumAndProcess(2, 3) << std::endl;
+	std::cout << "(2 * 3) * 2 = " << calcManagerSfin.doubleMultiply(2, 3) << std::endl;
 
-	std::println("Template Concepts based");
+	std::cout << "Template Concepts based" << std::endl;
 	conceptlib::Calculator calculatorConc;
 	conceptlib::CalculatorManager<conceptlib::Calculator> calcManagerConc(calculatorConc);
-	std::println("(2 + 3) * 2 = {}", calcManagerConc.calculateSumAndProcess(2, 3));
-	std::println("(2 * 3) * 2 = {}", calcManagerConc.doubleMultiply(2, 3));
-
+	std::cout << "(2 + 3) * 2 = " << calcManagerConc.calculateSumAndProcess(2, 3) << std::endl;
+	std::cout << "(2 * 3) * 2 = " << calcManagerConc.doubleMultiply(2, 3) << std::endl;
 	return 0;
 }
