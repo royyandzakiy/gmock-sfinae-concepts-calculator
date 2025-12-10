@@ -16,7 +16,7 @@
 				"CMAKE_CXX_COMPILER": "clang++"
 			},
 			"binaryDir": "${sourceDir}/build-clang",
-			"toolchainFile": "build/Release/generators/conan_toolchain.cmake",
+			"toolchainFile": "conan_toolchain.cmake",
 			"hidden": true
 		},
 		{
@@ -26,8 +26,7 @@
 			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release"
-			},
-			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
+			}
 		},
 		{
 			"displayName": "clang-debug",
@@ -36,8 +35,7 @@
 			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug"
-			},
-			"toolchainFile": "build/Debug/generators/conan_toolchain.cmake"
+			}
 		},
 		{
 			"displayName": "msvc",

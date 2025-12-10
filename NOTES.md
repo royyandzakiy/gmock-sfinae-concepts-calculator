@@ -2,8 +2,8 @@
 ```shell
 # success
 conan install . -of build-clang --build=missing -s compiler=clang -s compiler.version=20 -s compiler.runtime_type=Release -s compiler.cppstd=23 -c tools.cmake.cmaketoolchain:generator=Ninja -c tools.compilation:verbosity=verbose
-cmake --preset=conan-release
-cmake --build --preset=conan-release
+cmake --preset=conan-release # or use CMake tools to call Configure
+cmake --build --preset=conan-release # or use CMake tools to call Build
 
 # fail
 conan install . -of build-gcc --build=missing -s compiler=gcc -s compiler.version=15 -s compiler.libcxx=libstdc++ -s compiler.cppstd=23 -c tools.compilation:verbosity=verbose
