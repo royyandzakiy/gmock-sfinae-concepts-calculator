@@ -1,0 +1,18 @@
+#include "calculator.h"
+
+int Calculator::add(int a, int b) {
+	return a + b;
+}
+
+int Calculator::multiply(int a, int b) {
+	return a * b;
+}
+
+bool Calculator::isEven(int number) {
+	return number % 2 == 0;
+}
+
+int Calculator::processValue(int value) {
+	// Default implementation
+	return value * 2;
+}

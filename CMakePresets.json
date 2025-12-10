@@ -1,0 +1,82 @@
+{
+	"version": 3,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 28,
+		"patch": 0
+	},
+	"configurePresets": [
+		{
+			"displayName": "clang-ninja-base",
+			"name": "clang-ninja-base",
+			"description": "Configure using Clang compiler with Ninja generator",
+			"generator": "Ninja",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			},
+			"binaryDir": "${sourceDir}/build-clang",
+			"toolchainFile": "build/Release/generators/conan_toolchain.cmake",
+			"hidden": true
+		},
+		{
+			"displayName": "clang-release",
+			"name": "clang-release",
+			"description": "Configure using Clang compiler with Ninja generator",
+			"inherits": "clang-ninja-base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			},
+			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
+		},
+		{
+			"displayName": "clang-debug",
+			"name": "clang-debug",
+			"description": "Configure using Clang compiler with Ninja generator",
+			"inherits": "clang-ninja-base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			},
+			"toolchainFile": "build/Debug/generators/conan_toolchain.cmake"
+		},
+		{
+			"displayName": "msvc",
+			"name": "msvc-vs2022",
+			"description": "Configure using MSVC with Visual Studio 2022 generator",
+			"generator": "Visual Studio 17 2022",
+			"cacheVariables": {},
+			"toolset": {
+				"value": "v143",
+				"strategy": "external"
+			},
+			"architecture": {
+				"value": "x64",
+				"strategy": "external"
+			},
+			"binaryDir": "${sourceDir}/build-msvc",
+			"toolchainFile": "build/generators/conan_toolchain.cmake"
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "clang-debug",
+			"configurePreset": "clang-debug",
+			"configuration": "Debug"
+		},
+		{
+			"name": "clang-release",
+			"configurePreset": "clang-release",
+			"configuration": "Release"
+		},
+		{
+			"name": "msvc-debug",
+			"configurePreset": "msvc-vs2022",
+			"configuration": "Debug"
+		},
+		{
+			"name": "msvc-release",
+			"configurePreset": "msvc-vs2022",
+			"configuration": "Release"
+		}
+	]
+}

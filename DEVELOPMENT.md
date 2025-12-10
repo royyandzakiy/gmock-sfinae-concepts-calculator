@@ -1,0 +1,3 @@
+- fix setup-windows
+- add docs generator
+- add gtest + pytest
