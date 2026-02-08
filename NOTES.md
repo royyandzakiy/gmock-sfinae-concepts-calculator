@@ -1,3 +1,6 @@
+## Notes
+- 20260208 - somehow only the GCC version of unit_tests.exe successfully compiles, clang & msvc doesn't. Tho all myapp.exe compiles and runs fine
+
 ## Conan Install
 ```shell
 # CLANG
