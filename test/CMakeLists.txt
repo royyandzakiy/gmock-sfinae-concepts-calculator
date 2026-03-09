@@ -10,6 +10,7 @@ add_executable(unit_tests
 	test_inherit_calculator.cpp
     test_concept_calculator.cpp
     test_sfinae_calculator.cpp
+    test_main.cpp
 )
 
 target_link_libraries(unit_tests
@@ -17,8 +18,8 @@ target_link_libraries(unit_tests
         conceptlib 
         inheritlib 
         sfinaelib 
-        GTest::gtest_main # alt: create own main, use this "GTest::gtest"
         GTest::gmock
+        GTest::gtest # alt: "GTest::gtest_main", beware, fails to find tests with msvc
 )
 
 # =============================================================================
